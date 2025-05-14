@@ -1,16 +1,3 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-
-TOKEN = "7429376542:AAEWlmZjbu7eI8ULf6Bw0SG916evwdwLNJ8"
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("مرحبا... رب أتيـدج الرزق الحلال 🤲")
-
-if __name__ == "__main__":
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    print("✅ البوت يعمل الآن، انتقل لتليغرام وجرب /start")
-    app.run_polling()
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 
@@ -54,7 +41,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [[InlineKeyboardButton(location, callback_data=f'location_{location}')] for location in locations]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(
-            text="الوظيفو حسب الولاية:",
+            text="الوظائف حسب الولاية:",
             reply_markup=reply_markup
         )
 
@@ -63,7 +50,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [[InlineKeyboardButton(sector, callback_data=f'sector_{sector}')] for sector in sectors]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(
-            text="الوظيفة حسب القطاع:",
+            text="الوظائف حسب القطاع:",
             reply_markup=reply_markup
         )
 
@@ -81,6 +68,10 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CallbackQueryHandler(button))
+    print("✅ البوت يعمل الآن، انتقل لتليغرام وجرب /start")
+    app.run_polling()
+
     app.add_handler(CallbackQueryHandler(button))
     print("✅ البوت يعمل الآن، انتقل لتليغرام وجرب /start")
     app.run_polling()
